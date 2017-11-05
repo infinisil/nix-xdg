@@ -110,7 +110,7 @@ argument. For example you can include the base set like this:
 To actually use the wrapped package, you'll have to specify it somewhere in your
 nixos / home-manager config, such as
 
-```
+```nix
 {
   # NixOS
   environment.systemPackages = with pkgs; [ wget ];
