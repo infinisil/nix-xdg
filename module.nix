@@ -163,7 +163,9 @@ let
   };
 
   xdgOverlay = { base ? {}, specs }: self: pkgs:
-    flip mapAttrs specs (name: spec:
+    let
+      specs' = if isFunction specs then specs (import ./specs.nix) else specs;
+    in flip mapAttrs specs' (name: spec:
     wrapXDG { inherit base pkgs name spec; });
 
 in
@@ -173,7 +175,7 @@ in
   options.xdgSpec = mkOption {
     type = types.attrsOf types.unspecified;
     description = "xdg specification";
-    default = (import ./specs.nix).base;
+    default = {};
   };
 
   config = {

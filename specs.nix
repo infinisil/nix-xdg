@@ -11,13 +11,12 @@ let
 
   rebuildalot = {
     curl.env.CURL_HOME = { config }: config;
-    gnupg.GNUPGHOME = { config }: config;
+    gnupg.env.GNUPGHOME = { config }: config;
   };
 
 in {
 
   inherit base rebuildalot;
-
   all = base // rebuildalot;
 
 }
