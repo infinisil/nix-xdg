@@ -2,7 +2,11 @@
 
 This repo contains a nixos module (also usable with home-manager) for making
 programs xdg compliant, by wrapping the binaries with certain environment
-variables set or certains flags passed. All of this is done with a manual
+variables set or certains flags passed. Created the first draft in early 2017,
+but only just got it to a usable state, motivated by
+https://github.com/rycee/home-manager/issues/95.
+
+All of it is done with a manual
 specification for each program, which looks something like this:
 
 ```nix
