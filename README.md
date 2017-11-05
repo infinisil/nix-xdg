@@ -148,6 +148,8 @@ in {
 
 # ToDo
 
+- Split into more files, add default.nix, support for just importing the
+	functions, add overlay.nix
 - Overlay rebuilds a lot, but most ofter you just want changes in the user
 	profiles packages anyways -> what to use instead of an overlay to not make it
 	ugly?
