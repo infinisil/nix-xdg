@@ -11,8 +11,8 @@ specification for each program, which looks something like this:
 
 ```nix
 {
-	wget.flags = { cache }: "--hsts-file=${cache}/hsts";
-	less.env.ZDOTDIR = { config }: config;
+  wget.flags = { cache }: "--hsts-file=${cache}/hsts";
+  less.env.ZDOTDIR = { config }: config;
 }
 ```
 
@@ -35,27 +35,27 @@ with some others):
 
 ```nix
 {
-	myHello = {
-		# Use the hello package, since `pkgs.myHello` doesn't exist
-		package = pkgs.hello;
+  myHello = {
+    # Use the hello package, since `pkgs.myHello` doesn't exist
+    package = pkgs.hello;
 
-		# This will make the config argument be
-		# "${XDG_CONFIG_HOME:-$HOME/.config}/hithere", and similarily for cache and
-		# data
-		xdgName = "hithere";
+    # This will make the config argument be
+    # "${XDG_CONFIG_HOME:-$HOME/.config}/hithere", and similarily for cache and
+    # data
+    xdgName = "hithere";
 
-		# Wrapping the hello binary only
-		bin.hello.env.HELLO_DATA = { data }: data;
-		
-		# Such a function can occur anywhere _within_ the packages spec, and the
-		arguments will contain the packages directories
-		env = { config }: {
-			# This will apply for all binaries except the hello one, since HELLO_DATA
-			# is explicitly specified for it already.
-			HELLO_DATA = "$HOME/.hello";
-			HELLO_CONFIG = config;
-		};
-	};
+    # Wrapping the hello binary only
+    bin.hello.env.HELLO_DATA = { data }: data;
+
+    # Such a function can occur anywhere _within_ the packages spec, and the
+    arguments will contain the packages directories
+    env = { config }: {
+      # This will apply for all binaries except the hello one, since HELLO_DATA
+      # is explicitly specified for it already.
+      HELLO_DATA = "$HOME/.hello";
+      HELLO_CONFIG = config;
+    };
+  };
 }
 ```
 
@@ -66,9 +66,9 @@ either cloning this repository and adding
 
 ```nix
 {
-	imports = [
-		~/path/to/module.nix
-	];
+  imports = [
+    ~/path/to/module.nix
+  ];
 }
 ```
 
@@ -77,8 +77,8 @@ or with nix directly:
 ```nix
 {
   imports = [
-		(builtins.fetchTarBall https://github.com/Infinisil/xdg-nix/archive/master.tar.gz)
-	];
+    (builtins.fetchTarBall https://github.com/Infinisil/xdg-nix/archive/master.tar.gz)
+  ];
 }
 ```
 
@@ -90,9 +90,9 @@ You can add specifications by declaring them in the `xdgSpec` option like
 
 ```nix
 {
-	xdgSpec = {
-		wget.flags = { cache }: "--hsts-file=${cache}/hsts";
-	};
+  xdgSpec = {
+    wget.flags = { cache }: "--hsts-file=${cache}/hsts";
+  };
 }
 ```
 
@@ -101,7 +101,7 @@ argument. For example you can include the base set like this:
 
 ```nix
 {
-	xdgSpec = specs: specs.base;
+  xdgSpec = specs: specs.base;
 }
 ```
 
@@ -112,11 +112,11 @@ nixos / home-manager config, such as
 
 ```
 {
-	# NixOS
-	environment.systemPackages = with pkgs; [ wget ];
-	
-	# home-manager
-	home.packages = with pkgs; [ wget ];`.
+  # NixOS
+  environment.systemPackages = with pkgs; [ wget ];
+
+  # home-manager
+  home.packages = with pkgs; [ wget ];`.
 }
 ```
 
@@ -138,10 +138,10 @@ let
     })];
   };
 in {
-	# NixOS
+  # NixOS
   environment.systemPackages = with xdg; [ curl ];
 
-	# home-manager
+  # home-manager
   home.packages = with xdg; [ curl ];
 }
 ```
@@ -149,8 +149,8 @@ in {
 # ToDo
 
 - Split into more files, add default.nix, support for just importing the
-	functions, add overlay.nix
+  functions, add overlay.nix
 - Overlay rebuilds a lot, but most ofter you just want changes in the user
-	profiles packages anyways -> what to use instead of an overlay to not make it
-	ugly?
+  profiles packages anyways -> what to use instead of an overlay to not make it
+  ugly?
 - Potential home-manager integration, see https://github.com/rycee/home-manager/issues/95
