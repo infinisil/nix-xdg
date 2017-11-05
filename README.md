@@ -153,4 +153,5 @@ in {
 - Overlay rebuilds a lot, but most often you just want changes in the user
   profiles packages anyways -> what to use instead of an overlay to not make it
   ugly?
+- How to use only specific packages wrapped easily?
 - Potential home-manager integration, see https://github.com/rycee/home-manager/issues/95
