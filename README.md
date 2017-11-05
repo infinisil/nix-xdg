@@ -116,7 +116,7 @@ nixos / home-manager config, such as
   environment.systemPackages = with pkgs; [ wget ];
 
   # home-manager
-  home.packages = with pkgs; [ wget ];`.
+  home.packages = with pkgs; [ wget ];
 }
 ```
 
