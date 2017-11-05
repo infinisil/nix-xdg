@@ -155,3 +155,6 @@ in {
   ugly?
 - How to use only specific packages wrapped easily?
 - Potential home-manager integration, see https://github.com/rycee/home-manager/issues/95
+- Go through https://wiki.archlinux.org/index.php/XDG_Base_Directory_support and
+	check if there are any problems
+- Maybe add XDG_RUNTIME_DIR
