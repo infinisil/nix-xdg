@@ -15,7 +15,7 @@ let
 
     Note: Derivations are not recursed into.
 
-    Example: 
+    Example:
       x = { a }: {
         y.z = { b }: [ a b ];
       }
@@ -93,7 +93,7 @@ let
     mods = { env = {}; flags = []; bin = {}; }
       // spec'.result;
     dirs = attrValues spec'.args;
-    
+
     wrapBin = { name, extraFlags ? [], extraEnv ? [] }: wrap {
       input = "${package}/bin/${name}";
       output = "$out/bin/${name}";
@@ -106,6 +106,7 @@ let
       buildInputs = [ pkgs.makeWrapper ];
       preferLocalBuild = true;
       allowSubstitutes = false;
+      passthru = package.passthru or {};
     } ''
       mkdir $out
       ln -s ${package}/* $out
@@ -172,7 +173,7 @@ in
 {
 
   options.xdgSpec = mkOption {
-    type = types.attrsOf types.unspecified;
+    type = types.unspecified;
     description = "xdg specification";
     default = {};
   };
