@@ -62,18 +62,17 @@ let
   if dirs == [] && flags == [] && env == []
   then "ln -sv ${input} ${output}"
   else let
-    dirWrap = optionalString (dirs != [])
-      "--run 'mkdir -p ${
-        concatMapStringsSep " " (dir: "\"${dir}\"") dirs
-      }'";
-
-    envWrap = concatStringsSep " "
-      (mapAttrsToList (var: val: "--set '${var}' '${val}'")
-      (foldl (a: b: a // b) {} env));
-
-    flagWrap = concatMapStringsSep " "
-      (flag: "--add-flags '${flag}'") (toList flags);
-  in "makeWrapper ${input} ${output} ${dirWrap} ${envWrap} ${flagWrap}";
+    dirWrap = flip map dirs (dir: [
+      "--run" ''mkdir -p "${dir}"''
+    ]);
+    envWrap = flip mapAttrsToList (foldl (a: b: a // b) {} env) (var: val: [
+      "--run" ''export ${var}="${val}"''
+    ]);
+    flagWrap = flip map (toList flags) (flag: [
+      "--add-flags" flag
+    ]);
+    args = concatLists (dirWrap ++ envWrap ++ flagWrap);
+  in "makeWrapper ${input} ${output} " + escapeShellArgs args;
 
   /* Wraps a single program according to the spec argument, which should
   represent an XDG wrapping behaviour.
